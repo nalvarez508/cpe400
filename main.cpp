@@ -25,7 +25,7 @@ vector<pair<int, int>> shortestPath(int startID, int dest, vector<vector<pair<in
   int cursor = 0;
   vector<pair<int, int>> minDistance;
 
-  for (int x=0; x<routerLinks.size(); i++)
+  for (int x=0; x<routerLinks.size(); x++)
     minDistance.push_back(make_pair(INT_MAX, -1));
   minDistance[startID].first = 0;
   finalRoute.insert({0, startID});
@@ -57,7 +57,7 @@ void printPath(vector<int> nodePath)
 {
   cout << "Packet originates from router " << nodePath[nodePath.size()-2] << endl;
   for (int x=nodePath.size()-3; x>=0; x--)
-    cout << "---> router " << nodePath[i] << endl;
+    cout << "---> router " << nodePath[x] << endl;
   cout << "Packet has arrived." << endl;
 }
 
@@ -98,7 +98,7 @@ int main()
 
   //Mesh Creation (TODO)
 
-  for (int x=0; i<numberRouters; x++)
+  for (int x=0; x<numberRouters; x++)
   {
     int totalLinks = networkMesh[i]->routerLinks.size();
     linkDistances.push_back(vector<pair<int, int>>());
