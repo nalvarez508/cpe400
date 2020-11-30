@@ -96,7 +96,45 @@ int main()
     networkMesh.push_back(temp);
   }
 
-  //Mesh Creation (TODO)
+  //Mesh Creation (not randomly generated)
+  networkMesh[0]->newLink(networkMesh[1], 1);
+	networkMesh[1]->newLink(networkMesh[0], 1);
+	networkMesh[1]->newLink(networkMesh[2], 2);
+	networkMesh[1]->newLink(networkMesh[4], 4);
+	networkMesh[2]->newLink(networkMesh[1], 2);
+	networkMesh[2]->newLink(networkMesh[3], 3);
+	networkMesh[2]->newLink(networkMesh[5], 3);
+	networkMesh[3]->newLink(networkMesh[2], 3);
+	networkMesh[4]->newLink(networkMesh[1], 4);
+	networkMesh[4]->newLink(networkMesh[5], 3);
+	networkMesh[4]->newLink(networkMesh[6], 5);
+	networkMesh[5]->newLink(networkMesh[2], 3);
+	networkMesh[5]->newLink(networkMesh[4], 3);
+	networkMesh[5]->newLink(networkMesh[7], 10);
+	networkMesh[5]->newLink(networkMesh[8], 11);
+	networkMesh[6]->newLink(networkMesh[4], 5);
+	networkMesh[7]->newLink(networkMesh[5], 10);
+	networkMesh[7]->newLink(networkMesh[9], 6);
+	networkMesh[8]->newLink(networkMesh[5], 11);
+	networkMesh[8]->newLink(networkMesh[9], 7);
+	networkMesh[8]->newLink(networkMesh[10], 15);
+	networkMesh[9]->newLink(networkMesh[7], 6);
+	networkMesh[9]->newLink(networkMesh[8], 7);
+	networkMesh[10]->newLink(networkMesh[8], 15);
+	networkMesh[10]->newLink(networkMesh[11], 6);
+	networkMesh[11]->newLink(networkMesh[10], 6);
+	networkMesh[11]->newLink(networkMesh[12], 12);
+	networkMesh[11]->newLink(networkMesh[13], 12);
+	networkMesh[12]->newLink(networkMesh[11], 12);
+	networkMesh[12]->newLink(networkMesh[13], 11);
+	networkMesh[12]->newLink(networkMesh[14], 3);
+	networkMesh[13]->newLink(networkMesh[11], 12);
+	networkMesh[13]->newLink(networkMesh[12], 11);
+	networkMesh[13]->newLink(networkMesh[14], 3);
+	networkMesh[13]->newLink(networkMesh[15], 3);
+	networkMesh[14]->newLink(networkMesh[12], 3);
+	networkMesh[14]->newLink(networkMesh[13], 3);
+	networkMesh[15]->newLink(networkMesh[13], 3);
 
   for (int x=0; x<numberRouters; x++)
   {
