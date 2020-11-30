@@ -100,7 +100,7 @@ int main()
 
   for (int x=0; x<numberRouters; x++)
   {
-    int totalLinks = networkMesh[i]->routerLinks.size();
+    int totalLinks = networkMesh[x]->routerLinks.size();
     linkDistances.push_back(vector<pair<int, int>>());
     for (int y=0; y<totalLinks; y++)
     {

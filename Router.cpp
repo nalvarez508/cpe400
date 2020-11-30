@@ -36,7 +36,7 @@ Router::Router(int id, int bSize, double d_proc, double d_trans, double s_prop, 
   bandwidth = band;
 }
 
-void Router::newLink(Router * newRouter, int length);
+void Router::newLink(Router * newRouter, int length)
 {
   routerLinks.push_back(make_pair(newRouter, length));
 }
