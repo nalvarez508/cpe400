@@ -52,7 +52,7 @@ vector<vector<pair<int, int>>> linkDistances //Deprecated, unused
 char input //Deprecated, unused
 ```
 ### Functions
-**shortestPath()**
+#### shortestPath()
 ```C++
 vector<pair<int, int>> shortestPath(int startID, int dest, vector<vector<pair<int, int>>> routerLinks)
 ```
@@ -60,7 +60,7 @@ Creates a `finalRoute` set which contains the step number and the ID of the rout
 
 Creates a `minDistance` vector pair with distance and router ID.
 
-**printPath()**
+#### printPath()
 ```C++
 void printPath(vector<int> nodePath)
 ```
