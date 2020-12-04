@@ -74,3 +74,5 @@ The Router objects are created in a for loop using the initialized variables and
 The network mesh is created. The graph is arbitrary.
 
 ![Image of Network Graph](Graph.png?raw=true "Network Mesh")
+
+Next, the the `totalLinks` variable is created which
