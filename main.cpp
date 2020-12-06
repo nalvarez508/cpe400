@@ -149,7 +149,7 @@ int main()
   }
 
   vector<pair<int, int>> pathInfo = shortestPath(origin, destination, linkDistances);
-  int jumps = 0;
+  int jumps = 0; //Unused
   int prevRouter = pathInfo[destination].second;
   vector<int> nodePath;
   nodePath.push_back(destination);
@@ -157,7 +157,7 @@ int main()
 
   while (prevRouter != -1)
   {
-    jumps++;
+    jumps++; //Unused
     prevRouter = pathInfo[prevRouter].second;
     nodePath.push_back(prevRouter);
   }
