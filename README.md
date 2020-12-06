@@ -108,4 +108,28 @@ A for loop runs corresponding to the number of routers. Within, the the `totalLi
 
 The shortestPath function runs and outputs its data into the `pathInfo` vector. To prepare for printing the path travelled, a `jumps` variable is initialized along with a `prevRouter` variable that holds the ID of the destination router. A `nodePath` vector is created. The destination router ID is pushed in followed by the router before it in the final path.
 
-A while loop runs until it reaches the beginning of the path. It increments 
+A while loop runs until it reaches the beginning of the path. The next `prevRouter` variable is set to the previous router of the previous router. This is then pushed back on the `nodePath` vector, so that when searched from the beginning, it starts at the source and ends at the destination.
+
+The packet's path is then printed with `printPath(nodePath)`.
+
+### Secondary Variables
+```C++
+Router * parent; //Used in calculating travel time
+Router * child; //Used in calculating travel time
+bool lost = 0; //Lost packet flag
+double timer; //Running count of packet travel time
+int randMax = 100; //Max random value
+int randProb; //Random probability (out of 100)
+srand(time(NULL)); //Seeds RNG
+int droppedRouter = 0; //ID of router that caused dropped packet
+```
+
+A for loop runs corresponding to the size of `nodePath`, less 2, and the iterator `x` is decremented until we reach the first element.
+
+The random probability is generated, and if that's less than the chance of `packetLoss`, the program decides to drop a packet. If there is only one packet, the selected router is the current value of `x`. Otherwise, it is a random router from the `nodePath`. The `lost` flag is set to true.
+
+Next, time of travel must be calculated. The `parent` and `child` Router objects are initialized to the current router and the one before it (that is, closer to source), respectively. The `timer` value is set to the result of the `parent` object calling `timeOfTravel()`. As the for loop executes, the `timeFinal` variable is updated each time.
+
+Lastly, if there has been a lost packet, the for loop takes one step back to the previous router it ran for, increments `lostPackets` and resets the `lost` flag to false. Or, if there is more than one packet left, step the for loop back as well but decremement the number of packets left.
+
+The for loop exits and the travel time and number of lost packets are outputted.
