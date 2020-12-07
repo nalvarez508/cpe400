@@ -8,6 +8,7 @@ Dynamic Routing with a focus on Throughput
 
 #include "Router.h"
 #include <iostream>
+#include <time.h>
 using namespace std;
 
 //default constructor
@@ -15,26 +16,33 @@ Router::Router()
 {
   //TODO: Change variables to better reflect timeOfTravel() variables
   ID = -1;
-  bufferSize = 0;
-  delayProcessing = INT_MAX;
+  delayProcessing = ((rand() % 1000) / 1000.0);
   delayTransmission = 0;
+  delayQueuing = ((rand() % 1000) / 1000.0);
+  delayPropagation = 0;
   speedPropagation = 200000000;
   lossProbability = 1;
   bandwidth = 1000000;
-  bufferFull = 0;
-  canRoute = 0;
 }
 
 //parameterized constructor
-Router::Router(int id, int bSize, double d_proc, double d_trans, double s_prop, double loss, double band)
+Router::Router(int id, double s_prop, double loss, double band)
 {
   ID = id;
-  bufferSize = bSize;
-  delayProcessing = d_proc;
-  delayTransmission = d_trans;
+  delayProcessing = ((rand() % 1000) / 1000.0);
+  delayTransmission = 0;
+  delayQueuing = ((rand() % 1000) / 1000.0);
+  delayPropagation = 0;
   speedPropagation = s_prop;
   lossProbability = loss;
   bandwidth = band;
+}
+
+Router::~Router()
+{
+  //routerLinks.clear();
+  delayProcessing = 0;
+  delayQueuing = 0;
 }
 
 void Router::newLink(Router * newRouter, int length)
@@ -62,11 +70,9 @@ double Router::timeOfTravel(Router * dest, int packetSize)
       //Queueing: Congestion based
       //Transmission: packet size / bandwidth
       //Propagation: length / speed
-      //double delayNodal = dest->delayProcessing;
-      double delayQueueing; //Some rand
-      double delayTransmission = packetSize/bandwidth;
-      double delayPropagation = routerLinks[x].second/speedPropagation;
-      return (delayPropagation + delayTransmission); //Router found
+      delayTransmission = packetSize/bandwidth;
+      delayPropagation = routerLinks[x].second/speedPropagation;
+      return (delayProcessing + delayQueuing + delayPropagation + delayTransmission); //Router found
     }
   }
 

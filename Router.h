@@ -15,17 +15,16 @@ class Router
 {
   private:
     int ID;
-    int bufferSize;
     double delayProcessing;
     double delayTransmission;
+    double delayQueuing;
+    double delayPropagation;
     double speedPropagation;
     double lossProbability;
     double bandwidth;
-    bool bufferFull;
-    bool canRoute;
   public:
     Router();
-    Router(int id, int bSize, double d_proc, double d_trans, double s_prop, double loss, double band);
+    Router(int id, double s_prop, double loss, double band);
     ~Router();
 
     void newLink(Router * newRouter, int length);
