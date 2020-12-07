@@ -147,6 +147,6 @@ The for loop exits and the travel time and number of lost packets are outputted.
 ## Tackling Congestion
 Utilizing Nodal processing delay as a representation of congestion by using the private member variable `delayProcessing`.  
 
-## Finding shortest Path
+## Finding shortest path
 
 # Results and Analysis of the Results
