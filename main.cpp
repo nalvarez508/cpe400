@@ -23,10 +23,15 @@ vector<pair<int, int> > shortestPath(int startID, int dest, vector<vector<pair<i
 {
   set<pair<int, int> > finalRoute;
   vector<pair<int, int> > minDistance;
+  vector<pair<int, int> > delays;
 
   for (int x=0; x<routerLinks.size(); x++)
+  {
     minDistance.push_back(make_pair(INT_MAX, -1));
+    delays.push_back(make_pair(INT_MAX, -1));
+  }
   minDistance[startID].first = 0;
+  delays[startID].first = networkMesh[startID]->internalDelay();
   finalRoute.insert(make_pair(0, startID));
 
   //Evaluating travel times
@@ -39,13 +44,14 @@ vector<pair<int, int> > shortestPath(int startID, int dest, vector<vector<pair<i
 
     for (auto z : routerLinks[location])
     {
-      //cout << z.first << " / " << z.second << endl;
       //Better path found
-      if ((minDistance[z.first].first > minDistance[location].first + z.second))
+      if ((minDistance[z.first].first > minDistance[location].first + z.second) || (delays[z.first].first > delays[location].first + networkMesh[z.first]->internalDelay()))
       {
         finalRoute.erase(make_pair(minDistance[z.first].first, z.first));
         minDistance[z.first].first = minDistance[location].first + z.second;
         minDistance[z.first].second = location;
+        delays[z.first].first = delays[location].first + networkMesh[z.first]->internalDelay();
+        delays[z.first].second = location;
         finalRoute.insert(make_pair(minDistance[z.first].first, z.first));
       }
     }
@@ -69,7 +75,7 @@ void printPath(char v, int i, vector<int> nodePath)
             "----------------------------" << endl;
     for (int x=0; x<i; x++)
     {
-      cout << x << "\t" << packetInfo[x].first << "\t\t" << packetInfo[x].second << endl;
+      cout << x+1 << "\t" << packetInfo[x].first << "\t\t" << packetInfo[x].second << endl;
     }
   }
 }
@@ -87,7 +93,7 @@ int main()
   //int lostPackets = 0;
   int main_numberPackets = 1;
   int origin;
-  int numberRouters = 15;
+  int numberRouters = 8;
 
   vector<vector<pair<int, int> > > linkDistances;
   char input, v;
@@ -116,7 +122,8 @@ int main()
 
   for (int i=0; i<main_numberPackets; i++)
   {
-    cout << endl;
+    if (v == 'y')
+      cout << endl;
     int numberPackets = main_numberPackets;
     //Node Creation
     for (int x=0; x <= numberRouters; x++)
@@ -126,7 +133,7 @@ int main()
     }
 
     //Mesh Creation (not randomly generated)
-    networkMesh[0]->newLink(networkMesh[1], 1);
+    /*networkMesh[0]->newLink(networkMesh[1], 1);
     networkMesh[1]->newLink(networkMesh[0], 1);
     networkMesh[1]->newLink(networkMesh[2], 2);
     networkMesh[1]->newLink(networkMesh[4], 4);
@@ -163,7 +170,33 @@ int main()
     networkMesh[13]->newLink(networkMesh[15], 3);
     networkMesh[14]->newLink(networkMesh[12], 3);
     networkMesh[14]->newLink(networkMesh[13], 3);
-    networkMesh[15]->newLink(networkMesh[13], 3);
+    networkMesh[15]->newLink(networkMesh[13], 3);*/
+
+    networkMesh[0]->newLink(networkMesh[1], 1);
+    networkMesh[0]->newLink(networkMesh[3], 1);
+    networkMesh[1]->newLink(networkMesh[0], 1);
+    networkMesh[1]->newLink(networkMesh[4], 1);
+    networkMesh[1]->newLink(networkMesh[2], 1);
+    networkMesh[2]->newLink(networkMesh[1], 1);
+    networkMesh[2]->newLink(networkMesh[5], 1);
+    networkMesh[3]->newLink(networkMesh[0], 1);
+    networkMesh[3]->newLink(networkMesh[4], 1);
+    networkMesh[3]->newLink(networkMesh[6], 1);
+    networkMesh[4]->newLink(networkMesh[1], 1);
+    networkMesh[4]->newLink(networkMesh[3], 1);
+    networkMesh[4]->newLink(networkMesh[5], 1);
+    networkMesh[4]->newLink(networkMesh[7], 1);
+    networkMesh[5]->newLink(networkMesh[2], 1);
+    networkMesh[5]->newLink(networkMesh[4], 1);
+    networkMesh[5]->newLink(networkMesh[8], 1);
+    networkMesh[6]->newLink(networkMesh[3], 1);
+    networkMesh[6]->newLink(networkMesh[7], 1);
+    networkMesh[7]->newLink(networkMesh[4], 1);
+    networkMesh[7]->newLink(networkMesh[6], 1);
+    networkMesh[7]->newLink(networkMesh[8], 1);
+    networkMesh[8]->newLink(networkMesh[5], 1);
+    networkMesh[8]->newLink(networkMesh[7], 1);
+
 
     for (int x=0; x<=numberRouters; x++)
     {
