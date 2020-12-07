@@ -133,3 +133,21 @@ Next, time of travel must be calculated. The `parent` and `child` Router objects
 Lastly, if there has been a lost packet, the for loop takes one step back to the previous router it ran for, increments `lostPackets` and resets the `lost` flag to false. Or, if there is more than one packet left, step the for loop back as well but decremement the number of packets left.
 
 The for loop exits and the travel time and number of lost packets are outputted.
+
+# Functionality of the protocol
+## Realistic Aspects
+### Ambiguous network mesh structure
+
+### Unique distances between nodes
+
+### Presence of router congestion
+
+
+# Important Novel Protocol/functionality
+## Tackling Congestion
+Utilizing Nodal processing delay as a representation of congestion by using the private member variable `delayProcessing`.  
+
+## Finding shortest path
+
+
+# Results and Analysis of the Results
