@@ -28,7 +28,7 @@ class Router
     ~Router();
 
     void newLink(Router * newRouter, int length);
-    double totalDelay(Router * r, int packetSize, int x);
+    double internalDelay();
     double timeOfTravel(Router * dest, int packetSize);
     int getID();
 

@@ -50,11 +50,9 @@ void Router::newLink(Router * newRouter, int length)
   routerLinks.push_back(make_pair(newRouter, length));
 }
 
-double Router::totalDelay(Router * r, int packetSize, int x)
+double Router::internalDelay()
 {
-  double t_delayTransmission = packetSize/bandwidth;
-  double t_delayPropagation = routerLinks[x].second/speedPropagation;
-  return (delayQueueing + delayProcessing + t_delayPropagation + t_delayTransmission);
+  return (delayQueueing + delayProcessing);
 }
 
 double Router::timeOfTravel(Router * dest, int packetSize)
