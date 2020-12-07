@@ -39,8 +39,9 @@ vector<pair<int, int> > shortestPath(int startID, int dest, vector<vector<pair<i
 
     for (auto z : routerLinks[location])
     {
+      //cout << z.first << " / " << z.second << endl;
       //Better path found
-      if (minDistance[z.first].first > minDistance[location].first + z.second)
+      if ((minDistance[z.first].first > minDistance[location].first + z.second))
       {
         finalRoute.erase(make_pair(minDistance[z.first].first, z.first));
         minDistance[z.first].first = minDistance[location].first + z.second;
@@ -235,6 +236,12 @@ int main()
       cout << "Travel time: " << timeFinal << " ms" << endl;
       cout << lostPackets << " lost packet(s)" << endl;
     }
+
+    for (int k=0; k<networkMesh.size(); k++)
+      networkMesh[k]->~Router();
+
+    networkMesh.clear();
+    nodePath.clear();
   }
   vector<int> emptyVector;
   if (v == 'n')
