@@ -1,3 +1,10 @@
 .DS_Store
 .vscode/
 .vscode/c_cpp_properties.json
+Router.o
+Routing
+Routing.out
+main.o
+Routing.dSYM/Contents/Info.plist
+Routing.out.dSYM/Contents/Info.plist
+Router.exe
