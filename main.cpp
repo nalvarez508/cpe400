@@ -20,16 +20,15 @@ double timeFinal = 0;
 int destination;
 vector<Router*> networkMesh;
 
-vector<pair<int, int>> shortestPath(int startID, int dest, vector<vector<pair<int, int>>> routerLinks)
+vector<pair<int, int> > shortestPath(int startID, int dest, vector<vector<pair<int, int> > > routerLinks)
 {
-  set<pair<int, int>> finalRoute;
-  int cursor = 0;
-  vector<pair<int, int>> minDistance;
+  set<pair<int, int> > finalRoute;
+  vector<pair<int, int> > minDistance;
 
   for (int x=0; x<routerLinks.size(); x++)
     minDistance.push_back(make_pair(INT_MAX, -1));
   minDistance[startID].first = 0;
-  finalRoute.insert({0, startID});
+  finalRoute.insert(make_pair(0, startID));
 
   //Evaluating travel times
   while (!finalRoute.empty())
@@ -44,10 +43,10 @@ vector<pair<int, int>> shortestPath(int startID, int dest, vector<vector<pair<in
       //Better path found
       if (minDistance[z.first].first > minDistance[location].first + z.second)
       {
-        finalRoute.erase({minDistance[z.first].first, z.first});
+        finalRoute.erase(make_pair(minDistance[z.first].first, z.first));
         minDistance[z.first].first = minDistance[location].first + z.second;
         minDistance[z.first].second = location;
-        finalRoute.insert({minDistance[z.first].first, z.first});
+        finalRoute.insert(make_pair(minDistance[z.first].first, z.first));
       }
     }
   }
@@ -79,16 +78,18 @@ int main()
   int origin;
   int numberRouters = 15;
 
-  vector<vector<pair<int, int>>> linkDistances;
+  vector<vector<pair<int, int> > > linkDistances;
   char input;
 
   cout << "##### Dynamic Routing Simulator #####" << endl;
   cout << "The network will be generated with " << numberRouters << " nodes." << endl;
 
   cout << "Origin ID: ";
-  cin >> origin;
+  //cin >> origin;
+  origin = 0;
   cout << "Destination ID: ";
-  cin >> destination;
+  //cin >> destination;
+  destination = 15;
 
   //Node Creation
   for (int x=0; x < numberRouters; x++)
@@ -137,10 +138,10 @@ int main()
   networkMesh[14]->newLink(networkMesh[13], 3);
   networkMesh[15]->newLink(networkMesh[13], 3);
 
-  for (int x=0; x<numberRouters; x++)
+  for (int x=0; x<=numberRouters; x++)
   {
     int totalLinks = networkMesh[x]->routerLinks.size();
-    linkDistances.push_back(vector<pair<int, int>>());
+    linkDistances.push_back(vector<pair<int, int> >());
     for (int y=0; y<totalLinks; y++)
     {
       dDist = networkMesh[x]->routerLinks[y].second;
@@ -148,7 +149,7 @@ int main()
     }
   }
 
-  vector<pair<int, int>> pathInfo = shortestPath(origin, destination, linkDistances);
+  vector<pair<int, int> > pathInfo = shortestPath(origin, destination, linkDistances);
   int jumps = 0; //Unused
   int prevRouter = pathInfo[destination].second;
   vector<int> nodePath;
