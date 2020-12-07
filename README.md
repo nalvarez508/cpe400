@@ -11,7 +11,7 @@ Created by Nick Alarez and Jayam Sutariya
 2. Driver File
    - [Global Variables](https://github.com/nicky189/cpe400#global-variables)
    - [Initial Variables](https://github.com/nicky189/cpe400#initial-variables)
-   - [Functions]
+   - Functions
      - [shortestPath()](https://github.com/nicky189/cpe400#shortestpath)
      - [printPath()](https://github.com/nicky189/cpe400#printpath)
    - [main() Code](https://github.com/nicky189/cpe400#main-code)
