@@ -29,8 +29,9 @@ class Router
     ~Router();
 
     void newLink(Router * newRouter, int length);
+    double totalDelay(Router * r, int packetSize, int x);
     double timeOfTravel(Router * dest, int packetSize);
     int getID();
 
-    vector<pair<Router*, int>> routerLinks;
+    vector<pair<Router*, int> > routerLinks;
 };
