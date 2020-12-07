@@ -41,13 +41,30 @@ void Router::newLink(Router * newRouter, int length)
   routerLinks.push_back(make_pair(newRouter, length));
 }
 
+double Router::totalDelay(Router * r, int packetSize, int x)
+{
+  //double delayNodal = dest->delayProcessing;
+  double delayQueueing; //Some rand
+  double delayTransmission = packetSize/bandwidth;
+  double delayPropagation = routerLinks[x].second/speedPropagation;
+  return (delayQueueing + delayPropagation + delayTransmission);
+}
+
 double Router::timeOfTravel(Router * dest, int packetSize)
 {
-  for (int x=0; x<routerLinks.size(); x++)
+  for (int x=0; x<routerLinks.size(); x++) //Checks all links from child (passed) router
   {
-    if (routerLinks[x].first == dest)
+    if (routerLinks[x].first == dest) //Finds link chosen in nodePath
     {
-      double delayPropagation = packetSize / bandwidth + routerLinks[x].second / speedPropagation;
+      //nodal + queue + trans + prop
+      //Nodal: Arbitrary
+      //Queueing: Congestion based
+      //Transmission: packet size / bandwidth
+      //Propagation: length / speed
+      //double delayNodal = dest->delayProcessing;
+      double delayQueueing; //Some rand
+      double delayTransmission = packetSize/bandwidth;
+      double delayPropagation = routerLinks[x].second/speedPropagation;
       return (delayPropagation + delayTransmission); //Router found
     }
   }
