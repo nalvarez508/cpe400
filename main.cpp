@@ -18,6 +18,7 @@ using namespace std;
 //double timeFinal = 0;
 int destination;
 vector<Router*> networkMesh;
+vector<pair<double, int> > packetInfo;
 
 vector<pair<int, int> > shortestPath(int startID, int dest, vector<vector<pair<int, int> > > routerLinks)
 {
@@ -52,12 +53,25 @@ vector<pair<int, int> > shortestPath(int startID, int dest, vector<vector<pair<i
   return minDistance;
 }
 
-void printPath(vector<int> nodePath)
+void printPath(char v, int i, vector<int> nodePath)
 {
-  cout << "Packet originates from router " << nodePath[nodePath.size()-2] << endl;
-  for (int x=nodePath.size()-3; x>=0; x--)
-    cout << "---> router " << nodePath[x] << endl;
-  cout << "Packet has arrived." << endl;
+  if (v == 'y')
+  {
+    cout << nodePath[nodePath.size()-2];
+    for (int x=nodePath.size()-3; x>=0; x--)
+      cout << " -> " << nodePath[x];
+    cout << endl;
+  }
+  else
+  {
+    cout.precision(5);
+    cout << "#\tTime\t\tLost  " << endl <<
+            "----------------------------" << endl;
+    for (int x=0; x<i; x++)
+    {
+      cout << x << "\t" << packetInfo[x].first << "\t\t" << packetInfo[x].second << endl;
+    }
+  }
 }
 
 int main()
@@ -79,29 +93,33 @@ int main()
   int numberRouters = 15;
 
   vector<vector<pair<int, int> > > linkDistances;
-  char input;
+  char input, v;
 
   cout << "##### Dynamic Routing Simulator #####" << endl;
   cout << "The network will be generated with " << numberRouters << " nodes." << endl;
 
-  cout << "Change number of packets to send? (y/n): ";
-  /*cin >> input;
+  cout << "Change number of packets to send? Default 1. (y/n): ";
+  cin >> input;
   if (input == 'y')
   {
     cout << "Packets to send: ";
-    cin >> numberPackets;
-  }*/
-  main_numberPackets = 10;
+    cin >> main_numberPackets;
+  }
+  //main_numberPackets = 10;
 
   cout << "Origin ID: ";
-  //cin >> origin;
-  origin = 0;
+  cin >> origin;
+  //origin = 0;
   cout << "Destination ID: ";
-  //cin >> destination;
-  destination = 15;
+  cin >> destination;
+  //destination = 15;
+
+  cout << "Verbose mode? (y/n): ";
+  cin >> v;
 
   for (int i=0; i<main_numberPackets; i++)
   {
+    cout << endl;
     int numberPackets = main_numberPackets;
     //Node Creation
     for (int x=0; x <= numberRouters; x++)
@@ -172,7 +190,6 @@ int main()
       prevRouter = pathInfo[prevRouter].second;
       nodePath.push_back(prevRouter);
     }
-    printPath(nodePath);
 
     Router * parent;
     Router * child;
@@ -194,7 +211,8 @@ int main()
         else
           droppedRouter = rand() % (nodePath.size()-2);
         
-        cout << "Lost packet! From " << nodePath[droppedRouter] << " to " << nodePath[droppedRouter-1] << "." << endl;
+        if (v == 'y')
+          cout << "Lost packet! From " << nodePath[droppedRouter] << " to " << nodePath[droppedRouter-1] << "." << endl;
         lost = 1;
       }
 
@@ -214,9 +232,17 @@ int main()
       }
       timeFinal += timer;
     }
-    cout << "Travel time: " << timeFinal << " ms" << endl;
-    cout << lostPackets << " lost packet(s)" << endl;
+    packetInfo.push_back(make_pair(timeFinal, lostPackets));
+    if (v == 'y')
+    {
+      printPath(v, i, nodePath);
+      cout << "Travel time: " << timeFinal << " ms" << endl;
+      cout << lostPackets << " lost packet(s)" << endl;
+    }
   }
+  vector<int> emptyVector;
+  if (v == 'n')
+    printPath(v, main_numberPackets, emptyVector);
 
   return 0;
 }
