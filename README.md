@@ -3,6 +3,20 @@
 ### Fall 2020, S. Sengupta
 Created by Nick Alarez and Jayam Sutariya
 
+# Contents
+1. Class: Router
+   - [Private Member Variables](https://github.com/nicky189/cpe400#private-member-variables)
+   - [Public Member Functions](https://github.com/nicky189/cpe400#public-member-functions)
+   - [Public Member Variables](https://github.com/nicky189/cpe400#public-member-variables)
+2. Driver File
+   - [Global Variables](https://github.com/nicky189/cpe400#global-variables)
+   - [Initial Variables](https://github.com/nicky189/cpe400#initial-variables)
+   - [Functions]
+     - [shortestPath()](https://github.com/nicky189/cpe400#shortestpath)
+     - [printPath()](https://github.com/nicky189/cpe400#printpath)
+   - [main() Code](https://github.com/nicky189/cpe400#main-code)
+   - [Secondary Variables](https://github.com/nicky189/cpe400#secondary-variables)
+
 # Overview of Project Components
 ## Class: Router
 ### Private Member Variables
