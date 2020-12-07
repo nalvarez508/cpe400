@@ -18,7 +18,7 @@ Router::Router()
   ID = -1;
   delayProcessing = ((rand() % 1000) / 1000.0);
   delayTransmission = 0;
-  delayQueuing = ((rand() % 1000) / 1000.0);
+  delayQueueing = ((rand() % 1000) / 1000.0);
   delayPropagation = 0;
   speedPropagation = 200000000;
   lossProbability = 1;
@@ -31,7 +31,7 @@ Router::Router(int id, double s_prop, double loss, double band)
   ID = id;
   delayProcessing = ((rand() % 1000) / 1000.0);
   delayTransmission = 0;
-  delayQueuing = ((rand() % 1000) / 1000.0);
+  delayQueueing = ((rand() % 1000) / 1000.0);
   delayPropagation = 0;
   speedPropagation = s_prop;
   lossProbability = loss;
@@ -42,7 +42,7 @@ Router::~Router()
 {
   //routerLinks.clear();
   delayProcessing = 0;
-  delayQueuing = 0;
+  delayQueueing = 0;
 }
 
 void Router::newLink(Router * newRouter, int length)
@@ -52,11 +52,9 @@ void Router::newLink(Router * newRouter, int length)
 
 double Router::totalDelay(Router * r, int packetSize, int x)
 {
-  //double delayNodal = dest->delayProcessing;
-  double delayQueueing; //Some rand
-  double delayTransmission = packetSize/bandwidth;
-  double delayPropagation = routerLinks[x].second/speedPropagation;
-  return (delayQueueing + delayPropagation + delayTransmission);
+  double t_delayTransmission = packetSize/bandwidth;
+  double t_delayPropagation = routerLinks[x].second/speedPropagation;
+  return (delayQueueing + delayProcessing + t_delayPropagation + t_delayTransmission);
 }
 
 double Router::timeOfTravel(Router * dest, int packetSize)
@@ -72,7 +70,7 @@ double Router::timeOfTravel(Router * dest, int packetSize)
       //Propagation: length / speed
       delayTransmission = packetSize/bandwidth;
       delayPropagation = routerLinks[x].second/speedPropagation;
-      return (delayProcessing + delayQueuing + delayPropagation + delayTransmission); //Router found
+      return (delayProcessing + delayQueueing + delayPropagation + delayTransmission); //Router found
     }
   }
 

@@ -17,7 +17,7 @@ class Router
     int ID;
     double delayProcessing;
     double delayTransmission;
-    double delayQueuing;
+    double delayQueueing;
     double delayPropagation;
     double speedPropagation;
     double lossProbability;
