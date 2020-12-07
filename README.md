@@ -104,7 +104,7 @@ The Router objects are created in a for loop using the initialized variables and
 
 The network mesh is created. The graph is arbitrary.
 
-![Image of Network Graph](Graph.png?raw=true "Network Mesh")
+![Image of Network Graph](StretchGraph.png?raw=true "Network Mesh")
 
 A for loop runs corresponding to the number of routers. Within, the the `totalLinks` variable is created which takes on the value of the number of connections for a specific router. Another for loop runs for total number of links and updates the `dDist` variable with the distance of connection. This is then put in the `linkDistances` vector alongside the ID of the router.
 

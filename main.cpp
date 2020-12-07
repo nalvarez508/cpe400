@@ -93,7 +93,7 @@ int main()
   //int lostPackets = 0;
   int main_numberPackets = 1;
   int origin;
-  int numberRouters = 8;
+  int numberRouters = 16;
 
   vector<vector<pair<int, int> > > linkDistances;
   char input, v;
@@ -126,7 +126,7 @@ int main()
       cout << endl;
     int numberPackets = main_numberPackets;
     //Node Creation
-    for (int x=0; x <= numberRouters; x++)
+    for (int x=0; x < numberRouters; x++)
     {
       Router * temp = new Router(x, dProp, packetLoss, bandwidth);
       networkMesh.push_back(temp);
@@ -172,7 +172,7 @@ int main()
     networkMesh[14]->newLink(networkMesh[13], 3);
     networkMesh[15]->newLink(networkMesh[13], 3);*/
 
-    networkMesh[0]->newLink(networkMesh[1], 1);
+    /*networkMesh[0]->newLink(networkMesh[1], 1);
     networkMesh[0]->newLink(networkMesh[3], 1);
     networkMesh[1]->newLink(networkMesh[0], 1);
     networkMesh[1]->newLink(networkMesh[4], 1);
@@ -195,10 +195,60 @@ int main()
     networkMesh[7]->newLink(networkMesh[6], 1);
     networkMesh[7]->newLink(networkMesh[8], 1);
     networkMesh[8]->newLink(networkMesh[5], 1);
-    networkMesh[8]->newLink(networkMesh[7], 1);
+    networkMesh[8]->newLink(networkMesh[7], 1);*/
 
+    networkMesh[0]->newLink(networkMesh[1], 1);
+    networkMesh[0]->newLink(networkMesh[4], 1);
+    networkMesh[1]->newLink(networkMesh[0], 1);
+    networkMesh[1]->newLink(networkMesh[2], 1);
+    networkMesh[1]->newLink(networkMesh[5], 1);
+    networkMesh[2]->newLink(networkMesh[1], 1);
+    networkMesh[2]->newLink(networkMesh[3], 1);
+    networkMesh[2]->newLink(networkMesh[6], 1);
+    networkMesh[3]->newLink(networkMesh[2], 1);
+    networkMesh[3]->newLink(networkMesh[7], 1);
+    networkMesh[4]->newLink(networkMesh[0], 1);
+    networkMesh[4]->newLink(networkMesh[5], 1);
+    networkMesh[4]->newLink(networkMesh[8], 1);
+    networkMesh[5]->newLink(networkMesh[1], 1);
+    networkMesh[5]->newLink(networkMesh[4], 1);
+    networkMesh[5]->newLink(networkMesh[6], 1);
+    networkMesh[5]->newLink(networkMesh[9], 1);
+    networkMesh[5]->newLink(networkMesh[10], 1);
+    networkMesh[6]->newLink(networkMesh[2], 1);
+    networkMesh[6]->newLink(networkMesh[5], 1);
+    networkMesh[6]->newLink(networkMesh[7], 1);
+    networkMesh[6]->newLink(networkMesh[10], 1);
+    networkMesh[7]->newLink(networkMesh[3], 1);
+    networkMesh[7]->newLink(networkMesh[6], 1);
+    networkMesh[7]->newLink(networkMesh[11], 1);
+    networkMesh[8]->newLink(networkMesh[4], 1);
+    networkMesh[8]->newLink(networkMesh[9], 1);
+    networkMesh[8]->newLink(networkMesh[12], 1);
+    networkMesh[9]->newLink(networkMesh[5], 1);
+    networkMesh[9]->newLink(networkMesh[8], 1);
+    networkMesh[9]->newLink(networkMesh[10], 1);
+    networkMesh[9]->newLink(networkMesh[13], 1);
+    networkMesh[10]->newLink(networkMesh[5], 1);
+    networkMesh[10]->newLink(networkMesh[6], 1);
+    networkMesh[10]->newLink(networkMesh[9], 1);
+    networkMesh[10]->newLink(networkMesh[11], 1);
+    networkMesh[10]->newLink(networkMesh[14], 1);
+    networkMesh[11]->newLink(networkMesh[7], 1);
+    networkMesh[11]->newLink(networkMesh[10], 1);
+    networkMesh[11]->newLink(networkMesh[15], 1);
+    networkMesh[12]->newLink(networkMesh[8], 1);
+    networkMesh[12]->newLink(networkMesh[13], 1);
+    networkMesh[13]->newLink(networkMesh[9], 1);
+    networkMesh[13]->newLink(networkMesh[12], 1);
+    networkMesh[13]->newLink(networkMesh[14], 1);
+    networkMesh[14]->newLink(networkMesh[10], 1);
+    networkMesh[14]->newLink(networkMesh[13], 1);
+    networkMesh[14]->newLink(networkMesh[15], 1);
+    networkMesh[15]->newLink(networkMesh[11], 1);
+    networkMesh[15]->newLink(networkMesh[14], 1);
 
-    for (int x=0; x<=numberRouters; x++)
+    for (int x=0; x<numberRouters; x++)
     {
       int totalLinks = networkMesh[x]->routerLinks.size();
       linkDistances.push_back(vector<pair<int, int> >());
