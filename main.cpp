@@ -15,7 +15,7 @@ Dynamic Routing with a focus on Throughput
 using namespace std;
 
 //Globals
-double timeFinal = 0;
+//double timeFinal = 0;
 int destination;
 vector<Router*> networkMesh;
 
@@ -62,18 +62,19 @@ void printPath(vector<int> nodePath)
 
 int main()
 {
+  srand(time(NULL));
   //Variables
   int packetSize = 256;
-  int bufferSize = 4096;
+  int bufferSize = 4096; //Set to random value in router creation for loop
   double bandwidth = 1500;
   double packetLoss = 0.05;
-  double dProc = 0.05;
+  double dProc = 0.05; //See above
   double dTrans = 0.05;
   double dProp = 1;
   double dDist = 0;
   double dTotal = 0;
-  int lostPackets = 0;
-  int numberPackets = 1;
+  //int lostPackets = 0;
+  int main_numberPackets = 1;
   int origin;
   int numberRouters = 15;
 
@@ -83,6 +84,15 @@ int main()
   cout << "##### Dynamic Routing Simulator #####" << endl;
   cout << "The network will be generated with " << numberRouters << " nodes." << endl;
 
+  cout << "Change number of packets to send? (y/n): ";
+  /*cin >> input;
+  if (input == 'y')
+  {
+    cout << "Packets to send: ";
+    cin >> numberPackets;
+  }*/
+  main_numberPackets = 10;
+
   cout << "Origin ID: ";
   //cin >> origin;
   origin = 0;
@@ -90,120 +100,123 @@ int main()
   //cin >> destination;
   destination = 15;
 
-  //Node Creation
-  for (int x=0; x < numberRouters; x++)
+  for (int i=0; i<main_numberPackets; i++)
   {
-    Router * temp = new Router(x, bufferSize, dProc, dTrans, dProp, packetLoss, bandwidth);
-    networkMesh.push_back(temp);
-  }
-
-  //Mesh Creation (not randomly generated)
-  networkMesh[0]->newLink(networkMesh[1], 1);
-  networkMesh[1]->newLink(networkMesh[0], 1);
-  networkMesh[1]->newLink(networkMesh[2], 2);
-  networkMesh[1]->newLink(networkMesh[4], 4);
-  networkMesh[2]->newLink(networkMesh[1], 2);
-  networkMesh[2]->newLink(networkMesh[3], 3);
-  networkMesh[2]->newLink(networkMesh[5], 3);
-  networkMesh[3]->newLink(networkMesh[2], 3);
-  networkMesh[4]->newLink(networkMesh[1], 4);
-  networkMesh[4]->newLink(networkMesh[5], 3);
-  networkMesh[4]->newLink(networkMesh[6], 5);
-  networkMesh[5]->newLink(networkMesh[2], 3);
-  networkMesh[5]->newLink(networkMesh[4], 3);
-  networkMesh[5]->newLink(networkMesh[7], 10);
-  networkMesh[5]->newLink(networkMesh[8], 11);
-  networkMesh[6]->newLink(networkMesh[4], 5);
-  networkMesh[7]->newLink(networkMesh[5], 10);
-  networkMesh[7]->newLink(networkMesh[9], 6);
-  networkMesh[8]->newLink(networkMesh[5], 11);
-  networkMesh[8]->newLink(networkMesh[9], 7);
-  networkMesh[8]->newLink(networkMesh[10], 15);
-  networkMesh[9]->newLink(networkMesh[7], 6);
-  networkMesh[9]->newLink(networkMesh[8], 7);
-  networkMesh[10]->newLink(networkMesh[8], 15);
-  networkMesh[10]->newLink(networkMesh[11], 6);
-  networkMesh[11]->newLink(networkMesh[10], 6);
-  networkMesh[11]->newLink(networkMesh[12], 12);
-  networkMesh[11]->newLink(networkMesh[13], 12);
-  networkMesh[12]->newLink(networkMesh[11], 12);
-  networkMesh[12]->newLink(networkMesh[13], 11);
-  networkMesh[12]->newLink(networkMesh[14], 3);
-  networkMesh[13]->newLink(networkMesh[11], 12);
-  networkMesh[13]->newLink(networkMesh[12], 11);
-  networkMesh[13]->newLink(networkMesh[14], 3);
-  networkMesh[13]->newLink(networkMesh[15], 3);
-  networkMesh[14]->newLink(networkMesh[12], 3);
-  networkMesh[14]->newLink(networkMesh[13], 3);
-  networkMesh[15]->newLink(networkMesh[13], 3);
-
-  for (int x=0; x<=numberRouters; x++)
-  {
-    int totalLinks = networkMesh[x]->routerLinks.size();
-    linkDistances.push_back(vector<pair<int, int> >());
-    for (int y=0; y<totalLinks; y++)
+    int numberPackets = main_numberPackets;
+    //Node Creation
+    for (int x=0; x <= numberRouters; x++)
     {
-      dDist = networkMesh[x]->routerLinks[y].second;
-      linkDistances[x].push_back(make_pair(networkMesh[x]->routerLinks[y].first->getID(), dDist));
+      Router * temp = new Router(x, bufferSize, dProc, dTrans, dProp, packetLoss, bandwidth);
+      networkMesh.push_back(temp);
     }
-  }
 
-  vector<pair<int, int> > pathInfo = shortestPath(origin, destination, linkDistances);
-  int jumps = 0; //Unused
-  int prevRouter = pathInfo[destination].second;
-  vector<int> nodePath;
-  nodePath.push_back(destination);
-  nodePath.push_back(prevRouter);
+    //Mesh Creation (not randomly generated)
+    networkMesh[0]->newLink(networkMesh[1], 1);
+    networkMesh[1]->newLink(networkMesh[0], 1);
+    networkMesh[1]->newLink(networkMesh[2], 2);
+    networkMesh[1]->newLink(networkMesh[4], 4);
+    networkMesh[2]->newLink(networkMesh[1], 2);
+    networkMesh[2]->newLink(networkMesh[3], 3);
+    networkMesh[2]->newLink(networkMesh[5], 3);
+    networkMesh[3]->newLink(networkMesh[2], 3);
+    networkMesh[4]->newLink(networkMesh[1], 4);
+    networkMesh[4]->newLink(networkMesh[5], 3);
+    networkMesh[4]->newLink(networkMesh[6], 5);
+    networkMesh[5]->newLink(networkMesh[2], 3);
+    networkMesh[5]->newLink(networkMesh[4], 3);
+    networkMesh[5]->newLink(networkMesh[7], 10);
+    networkMesh[5]->newLink(networkMesh[8], 11);
+    networkMesh[6]->newLink(networkMesh[4], 5);
+    networkMesh[7]->newLink(networkMesh[5], 10);
+    networkMesh[7]->newLink(networkMesh[9], 6);
+    networkMesh[8]->newLink(networkMesh[5], 11);
+    networkMesh[8]->newLink(networkMesh[9], 7);
+    networkMesh[8]->newLink(networkMesh[10], 15);
+    networkMesh[9]->newLink(networkMesh[7], 6);
+    networkMesh[9]->newLink(networkMesh[8], 7);
+    networkMesh[10]->newLink(networkMesh[8], 15);
+    networkMesh[10]->newLink(networkMesh[11], 6);
+    networkMesh[11]->newLink(networkMesh[10], 6);
+    networkMesh[11]->newLink(networkMesh[12], 12);
+    networkMesh[11]->newLink(networkMesh[13], 12);
+    networkMesh[12]->newLink(networkMesh[11], 12);
+    networkMesh[12]->newLink(networkMesh[13], 11);
+    networkMesh[12]->newLink(networkMesh[14], 3);
+    networkMesh[13]->newLink(networkMesh[11], 12);
+    networkMesh[13]->newLink(networkMesh[12], 11);
+    networkMesh[13]->newLink(networkMesh[14], 3);
+    networkMesh[13]->newLink(networkMesh[15], 3);
+    networkMesh[14]->newLink(networkMesh[12], 3);
+    networkMesh[14]->newLink(networkMesh[13], 3);
+    networkMesh[15]->newLink(networkMesh[13], 3);
 
-  while (prevRouter != -1)
-  {
-    jumps++; //Unused
-    prevRouter = pathInfo[prevRouter].second;
+    for (int x=0; x<=numberRouters; x++)
+    {
+      int totalLinks = networkMesh[x]->routerLinks.size();
+      linkDistances.push_back(vector<pair<int, int> >());
+      for (int y=0; y<totalLinks; y++)
+      {
+        dDist = networkMesh[x]->routerLinks[y].second;
+        linkDistances[x].push_back(make_pair(networkMesh[x]->routerLinks[y].first->getID(), dDist));
+      }
+    }
+
+    vector<pair<int, int> > pathInfo = shortestPath(origin, destination, linkDistances);
+    int prevRouter = pathInfo[destination].second;
+    vector<int> nodePath;
+    nodePath.push_back(destination);
     nodePath.push_back(prevRouter);
+
+    while (prevRouter != -1)
+    {
+      prevRouter = pathInfo[prevRouter].second;
+      nodePath.push_back(prevRouter);
+    }
+    printPath(nodePath);
+
+    Router * parent;
+    Router * child;
+    bool lost = 0;
+    double timer;
+    int randMax = 100;
+    int randProb;
+    int lostPackets = 0;
+    double timeFinal = 0;
+    int droppedRouter = 0;
+
+    for (int x=nodePath.size()-2; x>0; x--)
+    {
+      randProb = (rand() % 101);
+      if (randProb < packetLoss*100)
+      {
+        if (numberPackets == 1)
+          droppedRouter = x;
+        else
+          droppedRouter = rand() % (nodePath.size()-2);
+        
+        cout << "Lost packet! From " << nodePath[droppedRouter] << " to " << nodePath[droppedRouter-1] << "." << endl;
+        lost = 1;
+      }
+
+      parent = networkMesh[nodePath[x]];
+      child = networkMesh[nodePath[x-1]];
+      timer = parent->timeOfTravel(child, packetSize);
+      if (lost)
+      {
+        x++;
+        lostPackets++;
+        lost = 0;
+      }
+      else if (numberPackets > 1)
+      {
+        numberPackets--;
+        x++;
+      }
+      timeFinal += timer;
+    }
+    cout << "Travel time: " << timeFinal << " ms" << endl;
+    cout << lostPackets << " lost packet(s)" << endl;
   }
-  printPath(nodePath);
-
-  Router * parent;
-  Router * child;
-  bool lost = 0;
-  double timer;
-  int randMax = 100;
-  int randProb;
-  srand(time(NULL));
-  int droppedRouter = 0;
-
-  for (int x=nodePath.size()-2; x>0; x--)
-  {
-    randProb = (rand() % 101);
-    if (randProb < packetLoss*100)
-    {
-      if (numberPackets == 1)
-        droppedRouter = x;
-      else
-        droppedRouter = rand() % (nodePath.size()-2);
-      
-      cout << "Lost packet! From " << nodePath[droppedRouter] << " to " << nodePath[droppedRouter-1] << "." << endl;
-      lost = 1;
-    }
-
-    parent = networkMesh[nodePath[x]];
-    child = networkMesh[nodePath[x-1]];
-    timer = parent->timeOfTravel(child, packetSize);
-    if (lost)
-    {
-      x++;
-      lostPackets++;
-      lost = 0;
-    }
-    else if (numberPackets > 1)
-    {
-      numberPackets--;
-      x++;
-    }
-    timeFinal += timer;
-  }
-  cout << "Travel time: " << timeFinal << " ms" << endl;
-  cout << lostPackets << " lost packet(s)" << endl;
 
   return 0;
 }
