@@ -8,7 +8,6 @@ Dynamic Routing with a focus on Throughput
 
 #include "Router.h"
 #include <iostream>
-#include <fstream>
 #include <climits>
 #include <set>
 #include <time.h>
@@ -79,11 +78,8 @@ int main()
   srand(time(NULL));
   //Variables
   int packetSize = 256;
-  int bufferSize = 4096; //Set to random value in router creation for loop
   double bandwidth = 1500;
   double packetLoss = 0.05;
-  double dProc = 0.05; //See above
-  double dTrans = 0.05;
   double dProp = 1;
   double dDist = 0;
   double dTotal = 0;
@@ -124,7 +120,7 @@ int main()
     //Node Creation
     for (int x=0; x <= numberRouters; x++)
     {
-      Router * temp = new Router(x, bufferSize, dProc, dTrans, dProp, packetLoss, bandwidth);
+      Router * temp = new Router(x, dProp, packetLoss, bandwidth);
       networkMesh.push_back(temp);
     }
 
