@@ -13,6 +13,7 @@ using namespace std;
 //default constructor
 Router::Router()
 {
+  //TODO: Change variables to better reflect timeOfTravel() variables
   ID = -1;
   bufferSize = 0;
   delayProcessing = INT_MAX;
