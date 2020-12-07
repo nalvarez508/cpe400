@@ -67,6 +67,8 @@ if (minDistance[z.first].first > minDistance[location].first + z.second)
 ```
 If the minimum distance of the first router that can be reached from `location` is greater than the minimum distance from the current router plus the distance to the first router, then...
 
+(Note: This will always run at least once due to the length in each new `minimumDistance` link being set to `INT_MAX`.)
+
 ```C++
 finalRoute.erase({minDistance[z.first].first, z.first})
 ```
