@@ -100,7 +100,7 @@ Change the ID of the router that was there to our current router.
 
 ```C++
 delays[z.first].first = delays[location].first + networkMesh[z.first]->internalDelay();
-        delays[z.first].second = location;
+delays[z.first].second = location;
 ```
 Liekwise, update the delay "path" and the ID of the router.
 
